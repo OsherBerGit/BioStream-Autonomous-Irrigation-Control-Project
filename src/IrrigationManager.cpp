@@ -1,17 +1,26 @@
 #include "IrrigationManager.h"
-#include <Arduino.h>
 
-void IrrigationManager::begin() {
-    pinMode(PIN_RELAY, OUTPUT);
-    stopPump(); // Safety: Ensure pump is OFF on system startup
+// Constructor: Initializes the pump status variable to false
+IrrigationManager::IrrigationManager() : isPumpRunning(false) {}
+
+void IrrigationManager::init() {
+    // Configure the relay pin as an output
+    pinMode(PIN_RELAY_PUMP, OUTPUT);
+    
+    // Safety first: Ensure the pump is explicitly OFF when the system boots.
+    turnOff();
 }
 
-void IrrigationManager::startPump() {
-    digitalWrite(PIN_RELAY, PUMP_ON);
-    _isPumping = true;
+void IrrigationManager::turnOn() {
+    digitalWrite(PIN_RELAY_PUMP, PUMP_ON); // PUMP_ON is defined as LOW
+    isPumpRunning = true;
 }
 
-void IrrigationManager::stopPump() {
-    digitalWrite(PIN_RELAY, PUMP_OFF);
-    _isPumping = false;
+void IrrigationManager::turnOff() {
+    digitalWrite(PIN_RELAY_PUMP, PUMP_OFF); // PUMP_OFF is defined as HIGH
+    isPumpRunning = false;
+}
+
+bool IrrigationManager::isOn() {
+    return isPumpRunning;
 }

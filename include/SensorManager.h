@@ -1,22 +1,22 @@
-#ifndef SENSOR_MANAGER_H
-#define SENSOR_MANAGER_H
-
+#pragma once
+#include <Arduino.h>
 #include "Constants.h"
 
+/**
+ * @class SensorManager
+ * @brief Manages data collection from analog sensors (Moisture, Light, Temperature).
+ */
 class SensorManager {
 public:
-    // Constructor
-    SensorManager() {}
-
-    // Returns raw light value (0 - 1023)
-    // 0 is very dark, 1023 is very bright
-    int readLight();
-
-    // Returns raw value from soil moisture sensor (0-1023)
-    int readMoisture();
-
-    // Returns temperature in Celsius using LM35 formula
-    float readTemperature();
+    // Configure analog sensor pins as input pins
+    void init();
+    
+    // Read moisture level as a percentage (0-100)
+    int readMoisturePercent();
+    
+    // Read raw analog value (0-1023) from the LDR (light sensor)
+    int readLightRaw();
+    
+    // Read the LM35 sensor and convert the voltage to degrees Celsius
+    float readTemperatureCelsius();
 };
-
-#endif
