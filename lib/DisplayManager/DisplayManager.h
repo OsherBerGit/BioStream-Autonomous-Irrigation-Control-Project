@@ -2,10 +2,16 @@
 #include <Arduino.h>
 #include <LiquidCrystal_I2C.h>
 
-class DisplayManager {
+/**
+ * @class DisplayManager
+ * @brief Handles display output for the irrigation system using Dependency Injection.
+ */
+class DisplayManager
+{
 private:
-    LiquidCrystal_I2C lcd;
-    
+    // Reference to the LiquidCrystal_I2C object
+    LiquidCrystal_I2C &lcd;
+
     // Cache variables to prevent flickering
     float lastTemp = -99.0;
     int lastMoisture = -1;
@@ -20,8 +26,8 @@ private:
     int8_t lastIsError = -1;
 
 public:
-    // Constructor - initializes the LCD object with its I2C address and dimensions
-    DisplayManager(uint8_t address, uint8_t cols, uint8_t rows);
+    // (Dependency Injection)
+    DisplayManager(LiquidCrystal_I2C &lcdReference);
 
     // Initializes the display and turns on the backlight (call inside setup)
     void init();
