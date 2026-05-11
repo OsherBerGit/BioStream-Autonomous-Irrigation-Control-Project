@@ -1,7 +1,7 @@
 #include "SensorManager.h"
 #include <math.h>
 
-const bool isWokwi = true; // Set to true for Wokwi simulation, false for real hardware
+const bool isWokwi = false; // Set to true for Wokwi simulation, false for real hardware
 
 void SensorManager::init() {
     // Set all sensor pins to INPUT mode for analog reading
@@ -39,9 +39,7 @@ float SensorManager::readTemperatureCelsius() {
     float celsius = voltage * 100.0; // Convert voltage to Celsius (10mV per degree for LM35)
 
     if (isWokwi) {
-        // The Beta Coefficient (standard for Wokwi NTC is 3950)
         const float BETA = 3950;
-        // The NTC Beta Formula
         celsius = 1 / (log(1 / (1023. / analogValue - 1)) / BETA + 1.0 / 298.15) - 273.15;
     }
 
